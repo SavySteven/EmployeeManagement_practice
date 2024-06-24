@@ -6,9 +6,10 @@ namespace BasicLibrary.DTOs
     {
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
-        [Required] 
+        [Required]
+        public string? Email { get; set; }
 
-        public string? EmailAddress { get; set; }
+
         [DataType(DataType.Password)]
         [Required]
         public string? Password { get; set; }
