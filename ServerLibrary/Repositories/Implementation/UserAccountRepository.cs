@@ -66,10 +66,10 @@ namespace ServerLibrary.Repositories.Implementation
             if (!BCrypt.Net.BCrypt.Verify(User.Password, applicationUser.Password))
                 return new LoginResponse(false, "Email/Password not valid");
 
-            var getUserRole = await appDbContext.UserRoles.FirstOrDefaultAsync(_ => _.UserId == applicationUser.Id);
+            var getUserRole = await FindUserRole(applicationUser.Id);
             if (getUserRole is null) return new LoginResponse(false, "User role not found");
 
-            var getRoleName = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == getUserRole.RoleId);
+            var getRoleName = await FindRoleName(getUserRole.RoleId);
             if (getUserRole is null) return new LoginResponse(false, "User Role not found");
 
 
@@ -100,8 +100,14 @@ namespace ServerLibrary.Repositories.Implementation
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        //Method of FindUserRole and FindUserName
+        private async Task<UserRole> FindUserRole(int userId) => await appDbContext.UserRoles.FirstOrDefaultAsync(_ => _.UserId == userId);
+        private async Task<SystemRole> FindRoleName(int roleId) => await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == roleId);
+
+        // Method of GenerateRefershToken
         private static string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
+        //Method of FindUserByEmail
         private async Task<ApplicationUser> FindUserByEmail(string email) =>
             await appDbContext.ApplicationUsers.FirstOrDefaultAsync(_ => _.Email!.ToLower()!.Equals(email!.ToLower()));
 
@@ -110,6 +116,20 @@ namespace ServerLibrary.Repositories.Implementation
             var result = appDbContext.Add(model!);
             await appDbContext.SaveChangesAsync();
             return (T)result.Entity;
+        }
+
+        public async Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
+        {
+            // response if the token is null
+            if (token is null) return new LoginResponse(false, "Model is empty");
+            //finding the token if already exist
+            var findToken = await appDbContext.RefreshTokenInfos.FirstOrDefaultAsync(_ => _.Token!.Equals(token.Token));
+            if (findToken is null) return new LoginResponse(false, "Refresh token is required");
+
+            //get user details
+            var user = await appDbContext.ApplicationUsers.FirstOrDefaultAsync(_ => _.Id == findToken.UserId);
+            if (user is null) return new LoginResponse(false, "Refresh token could not be generated because user not found");
+
         }
     }
 }
