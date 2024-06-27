@@ -14,7 +14,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddHttpClient("SystemApiClient", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7294");
+    client.BaseAddress = new Uri("https://localhost:7262");
 });
 
 
