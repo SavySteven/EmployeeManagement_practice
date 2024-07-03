@@ -2,5 +2,5 @@
 
 namespace BasicLibrary.Responses
 {
-    public record LoginResponse(bool Flag, string Message = null!, string Token = null!, string refreshToken = null!);
+    public record LoginResponse(bool Flag, string Message = null!, string Token = null!, string RefreshToken = null!);
 }
