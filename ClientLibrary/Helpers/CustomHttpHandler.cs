@@ -49,7 +49,7 @@ namespace ClientLibrary.Helpers
         }
 
 
-        // creatino of GetreshToken
+        // creation of GetreshToken
         private async Task<string> GetReshToken(string refreshToken)
         {
             var result = await accountservice.RefreshTokenAsync(new RefreshToken() { Token = refreshToken });

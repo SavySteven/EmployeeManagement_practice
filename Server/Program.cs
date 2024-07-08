@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<JwtSection>(builder.Configuration.GetSection("JwtSection"));
 var jwtSection = builder.Configuration.GetSection(nameof(JwtSection)).Get<JwtSection>();
 
-// starting
+// services injection
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
@@ -57,7 +57,7 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// default on development environment
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -8,6 +8,14 @@ namespace ClientLibrary.Services.Implementation
 {
     public class UserAccountService(GetHttpClient getHttpClient) : IUserAccountService
     {
+
+        /// <summary>
+        /// post method on register request body. deserializes response into general repsons
+        /// object
+        /// </summary>
+        /// 
+
+
         public const string AuthUrl = "api/authentication";
         public async Task<GeneralResponse> CreateAsync(Register user)
         {

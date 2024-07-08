@@ -10,6 +10,7 @@ namespace Server.Controllers
     [AllowAnonymous]
     public class AuthenticationController(IUserAccount accountInterface) : ControllerBase
     {
+
         [HttpPost("register")]
         public async Task<IActionResult> CreateAsync(Register user)
         {
