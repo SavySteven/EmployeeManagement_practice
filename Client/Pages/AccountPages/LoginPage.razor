@@ -1,6 +1,8 @@
 ﻿@page "/identity/account/login"
 @using Client.Pages.OtherPages
+@using Syncfusion.Blazor.Popups
 @layout AuthenticationLLayout
+@inject SfDialogService DialogService
 
 <div class="container">
     <div class="row">
@@ -54,6 +56,8 @@
     </div>
 </div>
 
+
+
 @code {
     public bool ShowLoadingButton { get; set; } = false;
     Login User = new();
@@ -63,11 +67,19 @@
         var result = await accountService.SignInAsync(User);
         if (result.Flag)
         {
+            await DisplayDialog(result.Message, "Login Success");
             var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
                 { Token = result.Token, RefreshToken = result.RefreshToken });
             NavManager.NavigateTo("/", forceLoad: true);
+        }else
+        {
+            await DisplayDialog(result.Message, "Alert");
         }
         ShowLoadingButton = false;
+    }
+    private async Task DisplayDialog(string content, string title)
+    {
+        await DialogService.AlertAsync(content, title);
     }
 }
