@@ -4,6 +4,9 @@
 @layout AuthenticationLLayout
 @inject SfDialogService DialogService
 
+@* the pop up don't work it was on the side loads but not 
+pop up normally *@
+
 <div class="container">
     <div class="row">
         <div class="col-lg-4"></div>
@@ -54,10 +57,8 @@
                         </span>
                         <ValidationSummary />
                     </div>
-
                 </div>
             </EditForm>
-
         </div>
         <div class="col-lg-4"></div>
  
@@ -67,6 +68,12 @@
 @code {
     public bool ShowLoadingButton { get; set; } = false;
     Register User = new();
+
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        await CheckUserAuthentication();
+    }
 
     async Task HandleRegistration()
     {
@@ -86,5 +93,13 @@
     private async Task DisplayDialog(string content, string title)
     {
         await DialogService.AlertAsync(content, title);
+    }
+
+    private async Task CheckUserAuthentication()
+    {
+        var user = (await AuthenticationState).User;
+        bool isUserAuthenticated = user.Identity!.IsAuthenticated;
+        if (!isUserAuthenticated)
+            NavManager.NavigateTo("/home/dashboard");
     }
 }
