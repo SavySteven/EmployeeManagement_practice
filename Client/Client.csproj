@@ -8,7 +8,7 @@
 
 	<ItemGroup>
 	  <Content Remove="Layout\AuthenticationLayout.razor" />
-	  <Content Remove="Pages\DeparmentPages\GeneralDepartmentDialog.razor" />
+	  <Content Remove="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -34,15 +34,15 @@
 
 	<ItemGroup>
 	  <_ContentIncludedByDefault Remove="Layout\AuthenticationLayout.razor" />
-	  <_ContentIncludedByDefault Remove="Pages\DeparmentPages\GeneralDepartmentDialog.razor" />
+	  <_ContentIncludedByDefault Remove="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <UpToDateCheckInput Remove="Pages\DeparmentPages\GeneralDepartmentDialog.razor" />
+	  <UpToDateCheckInput Remove="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="Pages\DeparmentPages\GeneralDepartmentDialog.razor" />
+	  <None Include="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	</ItemGroup>
 
 </Project>
