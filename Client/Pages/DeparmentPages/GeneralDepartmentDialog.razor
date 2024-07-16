@@ -1,13 +1,14 @@
 ﻿@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.popups
+@using Syncfusion.Blazor.Popups
 @inject SfDialogService dialogService
 
-<sfDialog Width="350px" IsModal="true" ShowCloseIcon="true" @bind-visible="IsVisible">
-    <DialogEvent OnOpen="OpenDialog"></DialogEvent>
+<SfDialog Width="350px" IsModal="true" ShowCloseIcon="true" @bind-visible="IsVisible">
+   
+    <DialogEvents OnOpen="OpenDialog"></DialogEvents>
 
-    <DialogTemplate>
+    <DialogTemplates>
         <Header> Add Department </Header>
-        <Content>
+        <Content>s
             <EditForm Model="Department" Enchance OnSubmit="Save">
                 <div class="card border-success">
 
@@ -24,19 +25,25 @@
 
         </Content>
 
-    </DialogTemplate>
+    </DialogTemplates>
 
     <DialogButtons>
-        <DialogButton Content="SAVE" Type="ButtonType.Submit" IsPrimary="true" onclick="Save"/>
+        <DialogButton Content="SAVE" Type="ButtonType.Submit" IsPrimary="true" OnClick="Save"/>
     </DialogButtons>
-</sfDialog>
+</SfDialog>
 @code{
-    [Parameter] public GeneralDepartmentDTO Department { get; set } = new();
+    [Parameter] public GeneralDepartmentDTO Department { get; set; } = new();
     private bool IsVisible { get; set; } = false;
     public void OpenDialog()
     {
         IsVisible = true;
         StateHasChanged();
+    }
+
+    async void Save()
+    {
+        if (string.IsNullOrEmpty(Department.Name))
+            await dialogService.AlertAsync("You need to provide Department name.", "Alert!");
     }
 
 }
