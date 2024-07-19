@@ -1,7 +1,4 @@
 ﻿@page "/nav"
-@using Client.ApplicationStates
-@using Microsoft.AspNetCore.Components.Authorization
-@inject DepartmentState departmentState
 
 
 <AuthorizeView>
@@ -59,11 +56,11 @@
                                 <a class="nav-link p-2" @onclick="GeneralDepartmentClicked">
                                     <div class="hstack text-wrap">
                                         <span class="bi bi-file-medical fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
-                                        <span class="fs-6">General</span>
+                                        <span class="fs-6">General Dep</span>
                                     </div>
                                 </a>
                             </li>
-                            <li style="list-style:none" class="cusorStyle">
+                            <li style="list-style:none" class="cusorStyle" @onclick="DepartmentClicked">
                                 <a class="nav-link p-2">
                                     <div class="hstack">
                                         <span class="bi bi-subtrack fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
@@ -71,11 +68,49 @@
                                     </div>
                                 </a>
                             </li>
-                            <li style="list-style:none" class="cusorStyle">
+                            <li style="list-style:none" class="cusorStyle" @onclick="BranchClicked">
                                 <a class="nav-link p-2">
                                     <div class="hstck">
                                         <span class="bi bi-chevron-bar-contract fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
                                         <span>Branch</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li style="list-style:none">
+                                <hr/>
+                            </li>
+                            <li style="list-style:none" class="cusorStyle" @onclick="CountryClicked">
+                                <a class="nav-link p-2">
+                                    <div class="hstck">
+                                        <span class="bi bi-geo-alt fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                                        <span>Branch</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li style="list-style:none" class="cusorStyle" @onclick="CityClicked">
+                                <a class="nav-link p-2">
+                                    <div class="hstck">
+                                        <span class="bi bi-pin-map-fill fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                                        <span>Branch</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li style="list-style:none" class="cusorStyle" @onclick="TownClicked">
+                                <a class="nav-link p-2">
+                                    <div class="hstck">
+                                        <span class="bi bi-geo fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                                        <span>Branch</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li style="list-style:none">
+                                <hr />
+                            </li>
+                            <li style="list-style:none" class="cusorStyle" @onclick="EmployeeClicked">
+                                <a class="nav-link p-2">
+                                    <div class="hstck">
+                                        <span class="bi bi-people-fill fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                                        <span>Employees</span>
                                     </div>
                                 </a>
                             </li>
@@ -88,6 +123,12 @@
     </Authorized>
 </AuthorizeView>
 
+
+<style>
+    .cusorStyle{
+        cursor:pointer;
+    }
+</style>
 
 @code {
     private bool collapseNavMenu = true;
