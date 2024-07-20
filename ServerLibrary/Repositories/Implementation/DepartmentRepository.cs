@@ -36,9 +36,10 @@ namespace ServerLibrary.Repositories.Implementation
 
         public async Task<GeneralResponse> Update(Department item)
         {
-            var dep = await appDbContext.GeneralDepartments.FindAsync(item.Id);
+            var dep = await appDbContext.Departments.FindAsync(item.Id);
             if (dep is null) return NotFound();
             dep.Name = item.Name;
+            dep.GeneralDepartmentId = item.GeneralDepartmentId;
             await Commit();
             return Success();
         }

@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 	  <Content Remove="Layout\AuthenticationLayout.razor" />
+	  <Content Remove="Pages\ContentPages\DepartmentPages\BranchDialog.razor" />
 	  <Content Remove="Pages\ContentPages\DepartmentPages\DepartmentDialog.razor" />
 	  <Content Remove="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	</ItemGroup>
@@ -36,6 +37,7 @@
 
 	<ItemGroup>
 	  <_ContentIncludedByDefault Remove="Layout\AuthenticationLayout.razor" />
+	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\BranchDialog.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\DepartmentDialog.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	</ItemGroup>
@@ -45,12 +47,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Include="Pages\ContentPages\DepartmentPages\BranchDialog.razor" />
 	  <None Include="Pages\ContentPages\DepartmentPages\DepartmentDialog.razor" />
 	  <None Include="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Pages\ContentPages\DepartmentPages\DepartmentDialog.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\ContentPages\DepartmentPages\BranchDialog.razor" />
 	</ItemGroup>
 
 </Project>

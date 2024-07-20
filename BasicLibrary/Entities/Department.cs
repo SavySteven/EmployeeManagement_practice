@@ -1,4 +1,6 @@
-﻿namespace BasicLibrary.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace BasicLibrary.Entities
 {
     public class Department : BaseEntity
     {
@@ -8,6 +10,7 @@
         public int GeneralDepartmentId { get; set; }
 
         //One to many relationhsip with branch
+        [JsonIgnore]
         public List<Branch>? Branches { get; set; }
     }
 }
