@@ -11,6 +11,7 @@
 	  <Content Remove="Pages\ContentPages\DepartmentPages\BranchDialog.razor" />
 	  <Content Remove="Pages\ContentPages\DepartmentPages\DepartmentDialog.razor" />
 	  <Content Remove="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
+	  <Content Remove="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -40,6 +41,7 @@
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\BranchDialog.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\DepartmentDialog.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
+	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -50,6 +52,7 @@
 	  <None Include="Pages\ContentPages\DepartmentPages\BranchDialog.razor" />
 	  <None Include="Pages\ContentPages\DepartmentPages\DepartmentDialog.razor" />
 	  <None Include="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
+	  <None Include="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -58,6 +61,10 @@
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Pages\ContentPages\DepartmentPages\BranchDialog.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
 	</ItemGroup>
 
 </Project>

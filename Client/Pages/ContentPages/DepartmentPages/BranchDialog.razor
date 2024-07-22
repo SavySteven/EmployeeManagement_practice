@@ -37,12 +37,17 @@
                 </div>
             </EditForm>
         </content>
+            <DialogButtons>
+        <DialogButton Content="SAVE" Type="ButtonType.Submit" IsPrimary="true" OnClick="Save" />
+    </DialogButtons>
     </DialogTemplate>
+
+
+
+
 </SfDialog>
 
-<DialogButtons>
-    <DialogButton Content="SAVE" Type="ButtonType.Submit" IsPrimary="true" OnClick="Save"/>
-</DialogButtons>
+
 
 @code {
     [Parameter] public Branch Branch { get; set; } = new();
