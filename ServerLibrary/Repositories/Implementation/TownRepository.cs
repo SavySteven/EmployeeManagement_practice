@@ -19,13 +19,16 @@ namespace ServerLibrary.Repositories.Implementation
             return Success();
         }
 
-        public async Task<List<Town>> GetAll() => await appDbContext.Towns.ToListAsync();
+        public async Task<List<Town>> GetAll() => await appDbContext.Towns
+            .AsNoTracking()
+            .Include(c => c.City)
+            .ToListAsync();
 
         public async Task<Town> GetById(int id) => await appDbContext.Towns.FindAsync(id);
 
         public async Task<GeneralResponse> Insert(Town item)
         {
-            if (!await CheckName(item.Name!)) return new GeneralResponse(false, "Department already added");
+            if (!await CheckName(item.Name!)) return new GeneralResponse(false, $"{item.Name}Town already added");
             appDbContext.Towns.Add(item);
             await Commit();
             return Success();
@@ -33,9 +36,10 @@ namespace ServerLibrary.Repositories.Implementation
 
         public async Task<GeneralResponse> Update(Town item)
         {
-            var dep = await appDbContext.Towns.FindAsync(item.Id);
-            if (dep is null) return NotFound();
-            dep.Name = item.Name;
+            var town = await appDbContext.Towns.FindAsync(item.Id);
+            if (town is null) return NotFound();
+            town.Name = item.Name;
+            town.City = item.City;
             await Commit();
             return Success();
         }
@@ -43,7 +47,7 @@ namespace ServerLibrary.Repositories.Implementation
 
 
 
-        private static GeneralResponse NotFound() => new(false, "Sorry Department Not Found");
+        private static GeneralResponse NotFound() => new(false, "Sorry town Not Found");
 
         private static GeneralResponse Success() => new(true, "Process Completed");
 

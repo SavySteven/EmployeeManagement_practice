@@ -1,8 +1,8 @@
 ﻿<SfDialog Width="280px" IsModal="true" ShowCloseIcon="true" @bind-bind-Visible="IsVisible">
     <DialogEvents OnOpen="OpenDialog"></DialogEvents>
-    <DialogTemplate>
+    <DialogTemplates>
         <Header>@Title Country</Header>
-        <content>
+        <Content>
             <EditForm Model="Country" Enchance OnSubmit="Save">
                 <div class="card border-success">
                     <div class="card-body">
@@ -18,15 +18,15 @@
                     </div>
                 </div>
             </EditForm>
-        </content>
-
-        <DialogButtons>
-            <DialogButton Content="SAVE" Type="ButtonType.Submit" IsPrimary="true" OnClick="Save" />
-        </DialogButtons>
-
-    </DialogTemplate>
+        </Content>
 
 
+    </DialogTemplates>
+
+
+    <DialogButtons>
+        <DialogButton Content="SAVE" Type="ButtonType.Submit" IsPrimary="true" OnClick="Save" />
+    </DialogButtons>
 
 </SfDialog>
 
