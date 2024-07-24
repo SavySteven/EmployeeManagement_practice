@@ -1,6 +1,7 @@
 ﻿@page "/home/dashboard"
 
 
+
 <TableBanner/>
 <GeneralDepartmentPages/>
 <DepartmentPage/>
@@ -8,6 +9,7 @@
 <CountryPage/>
 <CityPage/>
 <TownPage/>
+<UserPage/>
 @code {
 
     [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }

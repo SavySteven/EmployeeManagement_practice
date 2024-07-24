@@ -21,6 +21,7 @@
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.DropDowns
 
+@using Client.Pages.UserPages
 @using Client.Pages.ContentPages.DepartmentPages.LocationPages
 @inject AllState departmentState
 @using Client.Pages.ContentPages.DepartmentPages
@@ -34,7 +35,8 @@
 @inject NavigationManager NavManager;
 
 @* Authentication *@
-@inject IUserAccountService accountService;
+@inject IUserAccountService accountService
+
 
 @* / Navbar tabs communication state handling *@
 
