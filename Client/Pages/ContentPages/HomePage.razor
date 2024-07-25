@@ -10,6 +10,7 @@
 <CityPage/>
 <TownPage/>
 <UserPage/>
+<EmployeePage/>
 @code {
 
     [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
@@ -17,7 +18,6 @@
     {
         await CheckUserAuthentication();
     }
-
 
     private async Task CheckUserAuthentication()
     {

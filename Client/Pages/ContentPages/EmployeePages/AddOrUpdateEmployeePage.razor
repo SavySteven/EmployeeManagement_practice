@@ -230,5 +230,30 @@
 @code {
     [Parameter] public bool ShowAddOrUpdateEmployee { get; set; }
     string FloatingNumber1 = "floatingNumber";
+    string Floatingdiv1 = "floatingDiv";
+
+    string FloatingNumber2 = "inactive-span";
+    string Floatingdiv2 = "inactive-div";
+
+    public bool FirstLayer { get; set; } = true;
+    public bool SecondLayer { get; set; } = false;
+
+
+
+    private void ShowLayer()
+    {
+        FirstLayer = false;
+        SecondLayer = true;
+    }
+
+    private void PrevClicked()
+    {
+        FirstLayer = true;
+        SecondLayer = false;
+    }
+
+
+
+
 
 }

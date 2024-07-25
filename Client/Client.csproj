@@ -13,6 +13,7 @@
 	  <Content Remove="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	  <Content Remove="Pages\ContentPages\DepartmentPages\LocationPages\CityPage.razor" />
 	  <Content Remove="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
+	  <Content Remove="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -24,6 +25,7 @@
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
 		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="23.1.36" />
 		<PackageReference Include="Syncfusion.Blazor.DropDowns" Version="23.1.36" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="23.1.36" />
 		<PackageReference Include="Syncfusion.Blazor.Popups" Version="23.1.36" />
 		<PackageReference Include="Syncfusion.Blazor.Themes" Version="23.1.36" />
 	</ItemGroup>
@@ -44,6 +46,7 @@
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\LocationPages\CityPage.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
+	  <_ContentIncludedByDefault Remove="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -56,6 +59,7 @@
 	  <None Include="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	  <None Include="Pages\ContentPages\DepartmentPages\LocationPages\CityPage.razor" />
 	  <None Include="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
+	  <None Include="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,6 +76,10 @@
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Pages\ContentPages\DepartmentPages\LocationPages\CityPage.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	</ItemGroup>
 
 </Project>
