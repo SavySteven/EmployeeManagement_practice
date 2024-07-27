@@ -11,10 +11,10 @@ namespace BasicLibrary.DTOs
         public int BranchId { get; set; }
 
         [Required, Range(1, 99999, ErrorMessage = "You must select Town")]
-        public string TownId { get; set; } = string.Empty;
+        public int TownId { get; set; }
 
         [Required]
-        public string Other { get; set; } = string.Empty;
+        public string? Other { get; set; }
 
     }
 }
