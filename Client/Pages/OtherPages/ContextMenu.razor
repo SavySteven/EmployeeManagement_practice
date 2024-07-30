@@ -1,0 +1,80 @@
+﻿<SfDialog Width="100px" IsModel="true" ShowCloseIcon="true" @bind-Visible="IsVisible">
+    <DialogEvents OnOpen="OpenContextMenu"></DialogEvents>
+    <DialogTemplates>
+        <Header>Management Menu</Header>
+        <Content>
+            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="ViewClicked">
+                <i class="bi bi-eye text-info"></i>
+                <span id="cursorStyle" class="text-info">View</span>
+            </div>
+            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="EditClicked">
+                <i class="bi bi-pencil text-info"></i>
+                <span id="cursorStyle" class="text-info">Edit</span>
+            </div>
+            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="DeleteClicked">
+                <i class="bi bi-trash text-info"></i>
+                <span id="cursorStyle" class="text-info">Delete</span>
+            </div>
+            <hr />
+            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="AddVacationClicked">
+                <i class="bi bi-backpack3 text-info"></i>
+                <span id="cursorStyle" class="text-info">Add Vacation</span>
+            </div>
+            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="AddOvertimeClicked">
+                <i class="bi bi-stopwatch text-info"></i>
+                <span id="cursorStyle" class="text-info">Add Overtime</span>
+            </div>
+            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="AddHealthClicked">
+                <i class="bi bi-hospital text-info"></i>
+                <span id="cursorStyle" class="text-info">Add Health</span>
+            </div>
+            <div class="hstack gap-2 mb-2" id="cursorStyle" @onclick="AddSanctionClicked">
+                <i class="bi bi-x-octagon text-info"></i>
+                <span id="cursorStyle" class="text-info">Add Sanction</span>
+            </div>
+        </Content>
+    </DialogTemplates>
+</SfDialog>
+
+<style>
+    #cursorStyle {
+        cursor: pointer;
+    }
+</style>
+
+@code {
+    SfDialog? OpenDialog;
+    private bool IsVisible { get; set; } = false;
+
+    [Parameter] public EventCallback HandleViewClicked { get; set; }
+    private async Task ViewClicked() => await HandleViewClicked.InvokeAsync();
+
+    [Parameter] public EventCallback HanleEditClicked { get; set; }
+    private async Task EditClicked() => await HanleEditClicked.InvokeAsync();
+
+    [Parameter] public EventCallback HandleDeleteClicked { get; set; }
+    private async Task ViewClicked() => await HandleDeleteClicked.InvokeAsync();
+
+    [Parameter] public EventCallback HandleAddVacationClicked { get; set; }
+    private async Task ViewClicked() => await HandleAddVacationClicked.InvokeAsync();
+
+    [Parameter] public EventCallback HandleAddOverTimeClicked { get; set; }
+    private async Task ViewClicked() => await HandleAddOverTimeClicked.InvokeAsync();
+
+    [Parameter] public EventCallback HandleAddSanctionClicked { get; set; }
+    private async Task ViewClicked() => await HandleAddSanctionClicked.InvokeAsync();
+
+    [Parameter] public EventCallback HandleAddHealthClicked { get; set; }
+    private async Task ViewClicked() => await HandleAddHealthClicked.InvokeAsync();
+
+    public void OpenContextMenu()
+    {
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    public void CloseContextMenu(){
+        IsVisible = false;
+        StateHasChanged();
+    }
+}
