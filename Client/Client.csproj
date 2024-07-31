@@ -13,6 +13,7 @@
 	  <Content Remove="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	  <Content Remove="Pages\ContentPages\DepartmentPages\LocationPages\CityPage.razor" />
 	  <Content Remove="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
+	  <Content Remove="Pages\ContentPages\EmployeePages\EmployeeDetailPage.razor" />
 	  <Content Remove="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	  <Content Remove="Pages\OtherPages\ContextMenu.razor" />
 	</ItemGroup>
@@ -47,6 +48,7 @@
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\LocationPages\CityPage.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
+	  <_ContentIncludedByDefault Remove="Pages\ContentPages\EmployeePages\EmployeeDetailPage.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\OtherPages\ContextMenu.razor" />
 	</ItemGroup>
@@ -61,6 +63,7 @@
 	  <None Include="Pages\ContentPages\DepartmentPages\GeneralDepartmentDialog.razor" />
 	  <None Include="Pages\ContentPages\DepartmentPages\LocationPages\CityPage.razor" />
 	  <None Include="Pages\ContentPages\DepartmentPages\LocationPages\CountryPage.razor" />
+	  <None Include="Pages\ContentPages\EmployeePages\EmployeeDetailPage.razor" />
 	  <None Include="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	  <None Include="Pages\OtherPages\ContextMenu.razor" />
 	</ItemGroup>
@@ -87,6 +90,10 @@
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Pages\OtherPages\ContextMenu.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\ContentPages\EmployeePages\EmployeeDetailPage.razor" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿@implements IDisposable
+﻿
+@implements IDisposable
 
 @if (allState.ShowEmployee)
 {
@@ -35,7 +36,7 @@
                                         <GridColumn HeaderText="Menu" HeaderTextAlign="TextAlign.Left">
                                             <Tempplate>
                                                 @{
-                                                    var employee = (content as Employee);
+                                                    var employee = (context as Employee);
                                                     <i class="bi bi-menu-down text-primary" id="cursorStyle" @onclick="()=>ShowMenuPopUp(employee!)"></i>
                                                 }
 
@@ -76,6 +77,20 @@
 </AddOrUpdateEmployeePage>
 
 
+<EmployeeDetailPage EmployeeDetails ="Employee"
+    ShowDetailsPage ="ShowDetailsPage"
+    HandleDetailsPageCloseBtnClicked="HandleDetailsPageCloseBtnClicked"/>
+
+
+<ContextMenu @ref="contextMenu" HandleDeleteClicked="DeleteClicked"
+             HanleEditClicked="EditClicked"
+             HandleViewClicked="ViewClicked"
+             HandleAddHealthClicked="AddHealthClicked"
+             HandleAddOverTimeClicked="AddOvertimeClicked"
+             HandleAddSanctionClicked="AddSanctionClicked"
+             HandleAddVacationClicked="AddVacationClicked" />
+
+<DoctorDialog @ref="doctorDialog" Doctor="Doctor" HandleSaveOperationEvent="SaveHealthEvent"/>
 @code {
     AddOrUpdateEmployeePage? addOrUpdateEmployee;
     public List<Employee> Employees { get; set; } = [];
@@ -93,13 +108,13 @@
 
 
     public List<Department> SelectedDepartments { get; set; } = [];
-    public List<Branches> SelectedBranches { get; set; } = [];
+    public List<Branch> SelectedBranches { get; set; } = [];
     public List<City> SelectedCities { get; set; } = [];
     public List<Town> SelectedTowns { get; set; } = [];
 
     protected async override Task OnInitializedAsync()
     {
-        allStae.Actino += StateHasChanged;
+        allState.Action += StateHasChanged;
         await LoadEmployees();
         await LoadDefault();
     }
@@ -117,7 +132,7 @@
 
     //country select
     private void HandleCountrySelectedEvent(int countryId) =>
-    SelectedCities = DefaultCities.Where(c => c.CountryId).ToList();
+    SelectedCities = DefaultCities.Where(c => c.CountryId == countryId).ToList();
 
     //city select
     private void HandleCitySelectedEvent(int cityId) =>
@@ -125,11 +140,11 @@
 
     //General Department Select
     void HandleGeneralDepartmentSelectedEvent(int generalDepartmentId) =>
-    SelectedDeparments = DefaultDepartments.Where(gd => gd.GeneralDepartmentId == generalDepartmentId).ToList();
+    SelectedDepartments = DefaultDepartments.Where(gd => gd.GeneralDepartmentId == generalDepartmentId).ToList();
 
     //Department Select
     void HandleDepartmentSelectedEvent(int departmentId) =>
-    SelectedBranches = DeafultBranches.Where(d => d.DepartmentId == departmentId).ToList();
+    SelectedBranches = DefaultBranches.Where(d => d.DepartmentId == departmentId).ToList();
 
     //Notify parent when added or update employee form closes
     private async Task NotifyParentFormCloseClicked()
@@ -137,6 +152,7 @@
         ShowMainPage = true;
         ShowAddOrUpdatePage = false;
         await LoadEmployees();
+        SelectedEmployee = new();
     }
 
     //Load Employees
@@ -170,14 +186,96 @@
 
     //Context Menu
     //Show Menu Pop Up
-    ContextMenu? contextMenu
+    ContextMenu? contextMenu;
     public Employee SelectedEmployee { get; set; } = new();
+
     void ShowMenuPopUp(Employee employee)
     {
         SelectedEmployee = employee;
         contextMenu!.OpenContextMenu();
     }
 
+    //Edit Clicked
+    void EditClicked()
+    {
+        //EmployeeGrouping1
+        addOrUpdateEmployee!.Employee.Id = SelectedEmployee.Id;
+        addOrUpdateEmployee!.EmployeeGroup1.Name = SelectedEmployee.Name;
+        addOrUpdateEmployee!.EmployeeGroup1.TelephoneNumber = SelectedEmployee.TelephoneNumber;
+        addOrUpdateEmployee!.EmployeeGroup1.FileNumber = SelectedEmployee.FileNumber;
+        addOrUpdateEmployee!.EmployeeGroup1.Address = SelectedEmployee.Address;
+        addOrUpdateEmployee!.EmployeeGroup1.Photo = SelectedEmployee.Photo;
+        addOrUpdateEmployee!.EmployeeGroup1.CivilId = SelectedEmployee.CivilId; 
+
+        //EmployeeGroup2
+        addOrUpdateEmployee!.EmployeeGroup2.JobName = SelectedEmployee.JobName;
+        addOrUpdateEmployee!.EmployeeGroup2.Other = SelectedEmployee.Other;
+
+        //General Department / Department / Branch
+        addOrUpdateEmployee!.GeneralDepartment = SelectedEmployee.Branch!.Department!.GeneralDepartment!.Name;
+        addOrUpdateEmployee!.Department = SelectedEmployee.Branch!.Department!.Name;
+        addOrUpdateEmployee!.Branch = SelectedEmployee.Branch!.Name;
+
+        //Country / City / Town
+        addOrUpdateEmployee!.Branch = SelectedEmployee.Town!.City!.Country!.Name;
+        addOrUpdateEmployee!.Branch = SelectedEmployee.Town!.City!.Name;
+        addOrUpdateEmployee!.Branch = SelectedEmployee.Town!.Name;
+
+        //Title
+        addOrUpdateEmployee.Title = "Update";
+        SelectedEmployee = new();
+        contextMenu!.CloseContextMenu();
+        ShowAddOrUpdatePage = true;
+        ShowMainPage = false;
+
+    }
+
+    // Delete Clicked
+    private async Task DeleteClicked()
+    {
+        contextMenu!.CloseContextMenu();
+        bool confirm = await dialogService.ConfirmAsync($"Are you sure you wanna delete {SelectedEmployee.Name}?", "Confirm Delete");
+        if (!confirm) return;
+
+        var response = await branchService.DeleteById(SelectedEmployee.Id, Constants.EmployeeBaseUrl);
+        var result = await DisplayMessage(response.Flag, response.Message);
+
+        if (result)
+        {
+            SelectedEmployee = new();
+            await LoadEmployees();
+        }
+    }
+
+    //View Clicked
+    public bool ShowDetailsPage { get; set; } = false;
+    private void ViewClicked()
+    {
+        Employee = SelectedEmployee;
+        contextMenu!.CloseContextMenu();
+        ShowDetailsPage = true;
+        ShowMainPage = false;
+        SelectedEmployee = new();
+    }
+
+    //Add Health Clicked
+    DoctorDialog? doctorDialog;
+    Doctor Doctor = new();
+    private void AddHealthClicked()
+    {
+        Doctor.EmployeeId = SelectedEmployee.Id;
+        contextMenu!.CloseContextMenu();
+        doctorDialog!.OpenDialog();
+    }
+
+
+
+    //Details Employee Close btn Clicked
+    void HandleDetailsPageCloseBtnClicked()
+    {
+        ShowDetailsPage = false;
+        ShowMainPage = true;
+    }
     //Display message using dialog service
     private async Task<bool> DisplayMessage(bool flag, string message)
     {
@@ -194,7 +292,6 @@
 
 
     }
-
 
     public void Dispose() => allState.Action -= StateHasChanged;
 
