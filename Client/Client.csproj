@@ -16,6 +16,7 @@
 	  <Content Remove="Pages\ContentPages\EmployeePages\EmployeeDetailPage.razor" />
 	  <Content Remove="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	  <Content Remove="Pages\OtherPages\ContextMenu.razor" />
+	  <Content Remove="Pages\OtherPages\DoctorPage\DoctorPage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -51,6 +52,7 @@
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\EmployeePages\EmployeeDetailPage.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	  <_ContentIncludedByDefault Remove="Pages\OtherPages\ContextMenu.razor" />
+	  <_ContentIncludedByDefault Remove="Pages\OtherPages\DoctorPage\DoctorPage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,6 +68,7 @@
 	  <None Include="Pages\ContentPages\EmployeePages\EmployeeDetailPage.razor" />
 	  <None Include="Pages\ContentPages\EmployeePages\EmployeePage.razor" />
 	  <None Include="Pages\OtherPages\ContextMenu.razor" />
+	  <None Include="Pages\OtherPages\DoctorPage\DoctorPage.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -94,6 +97,10 @@
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Pages\ContentPages\EmployeePages\EmployeeDetailPage.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\OtherPages\DoctorPage\DoctorPage.razor" />
 	</ItemGroup>
 
 </Project>

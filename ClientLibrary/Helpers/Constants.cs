@@ -9,5 +9,16 @@
         public const string CityBaseUrl = "api/city";
         public const string TownBaseUrl = "api/town";
         public const string EmployeeBaseUrl = "api/employee";
+
+        public const string DoctorBaseUrl = "api/doctor";
+
+        public const string OvertimeBaseUrl = "api/overtime";
+        public const string OvertimeTypeBaseUrl = "api/overtimetype";
+
+        public const string SanctionBaseUrl = "api/sanctiontype";
+        public const string SanctionTypeBaseUrl = "api/sanction";
+
+        public const string VacationBaseUrl = "api/vacation";
+        public const string VacationTypeBaseUrl = "api/vacationtype";
     }
 }

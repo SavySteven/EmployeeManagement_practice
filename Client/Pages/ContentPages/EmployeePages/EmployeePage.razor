@@ -1,5 +1,4 @@
-﻿
-@implements IDisposable
+﻿@implements IDisposable
 
 @if (allState.ShowEmployee)
 {
@@ -77,9 +76,9 @@
 </AddOrUpdateEmployeePage>
 
 
-<EmployeeDetailPage EmployeeDetails ="Employee"
-    ShowDetailsPage ="ShowDetailsPage"
-    HandleDetailsPageCloseBtnClicked="HandleDetailsPageCloseBtnClicked"/>
+<EmployeeDetailPage EmployeeDetails="Employee"
+                    ShowDetailsPage="ShowDetailsPage"
+                    HandleDetailsPageCloseBtnClicked="HandleDetailsPageCloseBtnClicked" />
 
 
 <ContextMenu @ref="contextMenu" HandleDeleteClicked="DeleteClicked"
@@ -90,7 +89,7 @@
              HandleAddSanctionClicked="AddSanctionClicked"
              HandleAddVacationClicked="AddVacationClicked" />
 
-<DoctorDialog @ref="doctorDialog" Doctor="Doctor" HandleSaveOperationEvent="SaveHealthEvent"/>
+<DoctorDialog @ref="doctorDialog" Doctor="Doctor" HandleSaveOperationEvent="SaveHealthEvent" />
 @code {
     AddOrUpdateEmployeePage? addOrUpdateEmployee;
     public List<Employee> Employees { get; set; } = [];
@@ -205,7 +204,7 @@
         addOrUpdateEmployee!.EmployeeGroup1.FileNumber = SelectedEmployee.FileNumber;
         addOrUpdateEmployee!.EmployeeGroup1.Address = SelectedEmployee.Address;
         addOrUpdateEmployee!.EmployeeGroup1.Photo = SelectedEmployee.Photo;
-        addOrUpdateEmployee!.EmployeeGroup1.CivilId = SelectedEmployee.CivilId; 
+        addOrUpdateEmployee!.EmployeeGroup1.CivilId = SelectedEmployee.CivilId;
 
         //EmployeeGroup2
         addOrUpdateEmployee!.EmployeeGroup2.JobName = SelectedEmployee.JobName;
@@ -268,7 +267,18 @@
         doctorDialog!.OpenDialog();
     }
 
-
+    //Save Health Handler
+    async Task SaveHealthEvent(Doctor item)
+    {
+        item.EmployeeId = SelectedEmployee.Id;
+        var (flag, message) = await doctorService.Insert(item, Constants.DoctorBaseUrl);
+        var response = await DisplayMessage(flag, message);
+        if(response){
+            SelectedEmployee = new();
+            Doctor = new();
+            doctorDialog!.CloseDialog();
+        }
+    }
 
     //Details Employee Close btn Clicked
     void HandleDetailsPageCloseBtnClicked()

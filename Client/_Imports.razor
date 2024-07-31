@@ -67,5 +67,17 @@
 @inject IGenericServiceInterface<City> cityService
 @inject IGenericServiceInterface<Town> townService
 
+@*  /Supplementary tables *@
+@inject IGenericServiceInterface<Overtime> overtimeService
+@inject IGenericServiceInterface<OvertimeType> overtimeTypeService
+
+@inject IGenericServiceInterface<Vacation> vacationService
+@inject IGenericServiceInterface<VacationType> vacationTypeService
+
+@inject IGenericServiceInterface<Sanction> sanctionService
+@inject IGenericServiceInterface<SanctionType> sanctionTypeService
+
+@inject IGenericServiceInterface<Doctor> doctorService
+
 @* /Employee *@
 @inject IGenericServiceInterface<Employee> employeeService
