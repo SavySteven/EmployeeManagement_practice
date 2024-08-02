@@ -1,25 +1,35 @@
 ﻿@implements IDisposable
 
-@if (allState.ShowHealth)
+@if (allState.ShowSanction)
 {
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card-header"><h4 class="float--start">Health Information</h4></div>
+                <div class="card-header"><h4 class="float--start">Manage Employee Overtime</h4></div>
                 <div class="card-header" style="max-height:580px; overflow-x:hidden; overflow-y:scroll;">
                     <div class="card-body">
                         @{
                             var Tool = (new List<string>() { "Search", "ExcelExport", "PdfExport", "Print" });
                         }
-                        <SfGrid DataSource="@Doctors" AllowPaging="true" AllowSorting="true"
+                        <SfGrid DataSource="@Overtimes" AllowPaging="true" AllowSorting="true"
                                 Toolbar="@tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
                             <GridPageSettings PageSize="5"></GridPageSettings>
-                            <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="Doctor"></GridEvents>
+                            <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="Sanction"></GridEvents>
                             <GridColumns>
-                                <GridColumn Field="@nameof(Doctor.EmployeeId) HeaderText="ID"></GridColumn>
-                                <GridColumn Field="@nameof(Doctor.MedicalDiagnose) HeaderText="Medical Diagnose"></GridColumn>
-                                <GridColumn Field="@nameof(Doctor.MedicalRecommendation) HeaderText="Recommendation"></GridColumn>
-                                <GridColumn Field="@nameof(Doctor.Date) HeaderText="Date"></GridColumn>
+                                <GridColumn Field=@nameof(Sanction.EmployeeId) HeaderText="ID"></GridColumn>
+                                <GridColumn HeaderText="Type">
+                                    <Template>
+                                        @{
+                                            var sanction = (context as Sanction);
+                                            <div>
+                                                @sanction!.SanctionType!.Name
+                                            </div>
+                                        }
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Field=@nameof(Overtime.Date) HeaderText="Occuring Date"></GridColumn>
+                                <GridColumn Field=@nameof(Overtime.Punishment) HeaderText="Punishment"></GridColumn>
+                                <GridColumn Field=@nameof(Overtime.PunishmentDate) HeaderText="Punishment Date"></GridColumn>
                                 <GridColumn HeaderText="Action">
                                     <Template>
                                         @{
@@ -40,65 +50,65 @@
     </div>
 }
 
-<style>
-    #cursorStyle {
-        cursor: pointer;
-    }
-
-</style>
-
-<DoctorDialog @ref="doctorDialog"
-              Doctor="Doctor"
-              HandleSaveOperationEvent="HandleSaveOperationEvent" />
+<SanctionDialog @ref="sanctionDialog"
+                ItemModel="ItemModel"
+                SanctionType="SanctionType"
+                HandleSaveOperationEvent="HandleSaveOperationEvent" />
 
 @code {
-    private SfGrid<Doctor>? DefaultGrid;
-    DoctorDialog? doctordialog;
-    Doctor Doctor = new();
-    public List<Doctor> Doctors { get; set; } = new();
+    private SfGrid<Sanction>? DefaultGrid;
+    SanctionDialog? sanctionDialog;
+    Overtime ItemModel = new();
+    public List<Sanction> Sanctions { get; set; } = new();
+    public List<SanctionType> OvertimeTypes { get; set; } = new();
     protected async override Task OnInitializedAsync()
     {
-        await GetHealth();
+        await GetTypes();
+        await GetSanctions();
         allSate.Action += StateHasChanged;
     }
 
-    private async Task GetHealth() => Doctors = await doctorService.GetAll(Constants.DoctorBaseUrl);
+    private async Task GetTypes() => OvertimeTypes = await sanctinTypeSErvice.GetAll(Constants.SanctionTypeBaseUrl);
+
+    private async Task GetSanctions() => Overtimes = await sanctionService.GetAll(Constants.SanctionBaseUrl);
+
+
+    void OpenDialog() => sanctionDialog?.OpenDialog();
 
     void AddButtonClicked()
     {
-        Doctor = new();
+        Sanction = new();
         OpenDialog();
     }
 
-    void OpenDialog() => doctorDialog?.OpenDialog();
 
-    private async Task HandleSaveOperationEvent(Doctor doctor)
+    private async Task HandleSaveOperationEvent(Sanction item)
     {
-        var result = await doctorService.Update(doctor, Constants.DoctorBaseUrl);
+        var result = await sanctionService.Update(item, Constants.SanctionBaseUrl);
         bool successCheck = await DisplayMesage(result.Flag, result.Message);
         if (successCheck)
         {
-            Doctor = new();
-            await GetHealth();
+            ItemModel = new();
+            await GetSanctions();
         }
     }
 
-    private void EditClicked(Doctor item)
+    private void EditClicked(Sanction item)
     {
-        Doctor = item;
+        ItemModel = item;
         OpenDialog();
     }
 
-    private async Task DeleteClicked(Doctor item)
+    private async Task DeleteClicked(Sanction item)
     {
         bool confirm = await dialogService.
         ConfirmAsync($"Are you sure you wanna delete this?", "Confirm Delete");
         if (!confirm) return;
 
-        var response = await doctorService.DeleteById(item.EmployeeId, Constants.DoctorBaseUrl);
+        var response = await sanctionService.DeleteById(item.EmployeeId, Constants.SanctionBaseUrl);
         var result = await DisplayMessage(response.Flag, response.Message);
         if (result)
-            await GetHealth();
+            await GetSanctions();
 
     }
 

@@ -1,25 +1,35 @@
 ﻿@implements IDisposable
 
-@if (allState.ShowHealth)
+@if (allState.ShowOvertime)
 {
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card-header"><h4 class="float--start">Health Information</h4></div>
+                <div class="card-header"><h4 class="float--start">Manage Employee Overtime</h4></div>
                 <div class="card-header" style="max-height:580px; overflow-x:hidden; overflow-y:scroll;">
                     <div class="card-body">
                         @{
                             var Tool = (new List<string>() { "Search", "ExcelExport", "PdfExport", "Print" });
                         }
-                        <SfGrid DataSource="@Doctors" AllowPaging="true" AllowSorting="true"
+                        <SfGrid DataSource="@Overtimes" AllowPaging="true" AllowSorting="true"
                                 Toolbar="@tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
                             <GridPageSettings PageSize="5"></GridPageSettings>
-                            <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="Doctor"></GridEvents>
+                            <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="Overtime"></GridEvents>
                             <GridColumns>
-                                <GridColumn Field="@nameof(Doctor.EmployeeId) HeaderText="ID"></GridColumn>
-                                <GridColumn Field="@nameof(Doctor.MedicalDiagnose) HeaderText="Medical Diagnose"></GridColumn>
-                                <GridColumn Field="@nameof(Doctor.MedicalRecommendation) HeaderText="Recommendation"></GridColumn>
-                                <GridColumn Field="@nameof(Doctor.Date) HeaderText="Date"></GridColumn>
+                                <GridColumn Field=@nameof(Vacation.EmployeeId) HeaderText="ID"></GridColumn>
+                                <GridColumn Field=@nameof(Overtime.MedicalDiagnose) HeaderText="Medical Diagnose">
+                                    <Template>
+                                        @{
+                                            var item = (context as Overtime);
+                                            <div>
+                                                @item!.OvertimeType!.Name
+                                            </div>
+                                        }
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Field=@nameof(Overtime.StartDate) HeaderText="Start Date"></GridColumn>
+                                <GridColumn Field=@nameof(Overtime.EndDate) HeaderText="End DAte"></GridColumn>
+                                <GridColumn Field=@nameof(Overtime.NumberOfDays) HeaderText="Number of days"></GridColumn>
                                 <GridColumn HeaderText="Action">
                                     <Template>
                                         @{
@@ -40,29 +50,30 @@
     </div>
 }
 
-<style>
-    #cursorStyle {
-        cursor: pointer;
-    }
-
-</style>
-
-<DoctorDialog @ref="doctorDialog"
-              Doctor="Doctor"
-              HandleSaveOperationEvent="HandleSaveOperationEvent" />
+<OvertimeDialog @ref="overtimeDialog"
+                ItemModel="ItemModel"
+                OvertimeTypes="OvertimeTypes"
+                HandleSaveOperationEvent="HandleSaveOperationEvent" />
 
 @code {
-    private SfGrid<Doctor>? DefaultGrid;
+    private SfGrid<Overtime>? DefaultGrid;
     DoctorDialog? doctordialog;
-    Doctor Doctor = new();
-    public List<Doctor> Doctors { get; set; } = new();
+    Overtime ItemModel = new();
+    public List<Overtime> Overtimes { get; set; } = new();
+    public List<OvertimeType> OvertimeTypes { get; set; } = new();
     protected async override Task OnInitializedAsync()
     {
-        await GetHealth();
+        await GetTypes();
+        await GetOvertime();
         allSate.Action += StateHasChanged;
     }
 
-    private async Task GetHealth() => Doctors = await doctorService.GetAll(Constants.DoctorBaseUrl);
+    private async Task GetTypes() => OvertimeTypes = await overtimeTypeService.GetAll(Constants.OvertimeTypeBaseUrl);
+
+    private async Task GetOvertime() => Overtimes = await overtimeService.GetAll(Constants.OvertimeBaseUrl);
+
+
+    void OpenDialog() => doctorDialog?.OpenDialog();
 
     void AddButtonClicked()
     {
@@ -70,22 +81,21 @@
         OpenDialog();
     }
 
-    void OpenDialog() => doctorDialog?.OpenDialog();
 
-    private async Task HandleSaveOperationEvent(Doctor doctor)
+    private async Task HandleSaveOperationEvent(Overtime item)
     {
-        var result = await doctorService.Update(doctor, Constants.DoctorBaseUrl);
+        var result = await overtimeService.Update(doctor, Constants.DoctorBaseUrl);
         bool successCheck = await DisplayMesage(result.Flag, result.Message);
         if (successCheck)
         {
-            Doctor = new();
-            await GetHealth();
+            ItemModel = new();
+            await GetOvertime();
         }
     }
 
     private void EditClicked(Doctor item)
     {
-        Doctor = item;
+        ItemModel = item;
         OpenDialog();
     }
 
@@ -95,7 +105,7 @@
         ConfirmAsync($"Are you sure you wanna delete this?", "Confirm Delete");
         if (!confirm) return;
 
-        var response = await doctorService.DeleteById(item.EmployeeId, Constants.DoctorBaseUrl);
+        var response = await overtimeService.DeleteById(item.EmployeeId, Constants.OvertimeBaseUrl);
         var result = await DisplayMessage(response.Flag, response.Message);
         if (result)
             await GetHealth();

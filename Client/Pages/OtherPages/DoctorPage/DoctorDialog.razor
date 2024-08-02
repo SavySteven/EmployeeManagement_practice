@@ -27,11 +27,10 @@
     <DialogButtons>
         <DialogButton Content="SAVE" Type="ButtonType.Submit" IsPrimary="true" OnClick="Save" />
     </DialogButtons>
-
 </SfDialog>
 
 @code {
-    public string Title  { get; set;} = "Add";
+    public string Title { get; set; } = "Add";
     [Parameter] public Doctor Doctor { get; set; } = new();
     [Parameter] public EventCallback<Doctor> HandleSaveOperationEvent { get; set; }
 
@@ -40,16 +39,14 @@
     private async void Save() => await HandleSaveOperationEvent.InvokeAsync(Doctor);
     public void OpenDialog()
     {
-    IsVisible = true;
-    StateHasChanged();
+        IsVisible = true;
+        StateHasChanged();
     }
     public void CloseDialog()
     {
-    IsVisible = false;
-    StateHasChanged();
+        IsVisible = false;
+        StateHasChanged();
     }
 
     public void ChangeTitle(string title) => Title = title;
-
-
 }
