@@ -12,7 +12,7 @@
                             var Tool = (new List<string>() { "Search", "ExcelExport", "PdfExport", "Print" });
                         }
                         <SfGrid DataSource="@Vacations" AllowPaging="true" AllowSorting="true"
-                                Toolbar="@tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
+                                Toolbar="@Tool" AllowExcelExport="true" @ref="DefaultGrid" AllowPdfExport="true">
                             <GridPageSettings PageSize="5"></GridPageSettings>
                             <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="Vacation"></GridEvents>
                             <GridColumns>
@@ -129,7 +129,7 @@
     public void Dispose() => allState.Action -= StateHasChanged;
 
     //Excel export / Pdf Export
-    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navications.ClickEventArgs args)
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         if (args.Item.Text == "Excel Export")
             await this.DefaultGrid!.ExcelExport()!;

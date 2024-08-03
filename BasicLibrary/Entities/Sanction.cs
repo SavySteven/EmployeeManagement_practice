@@ -13,5 +13,7 @@ namespace BasicLibrary.Entities
 
         // Many to one relationship with vacation type
         public SanctionType? SanctionType { get; set; }
+
+        public int SanctionTypeId { get; set; }
     }
 }

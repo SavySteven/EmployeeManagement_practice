@@ -43,7 +43,20 @@ builder.Services.AddScoped<IGenericServiceInterface<Country>, GenericServiceImpl
 builder.Services.AddScoped<IGenericServiceInterface<City>, GenericServiceImplementation<City>>();
 builder.Services.AddScoped<IGenericServiceInterface<Town>, GenericServiceImplementation<Town>>();
 
+// Overtime
+builder.Services.AddScoped<IGenericServiceInterface<Overtime>, GenericServiceImplementation<Overtime>>();
+builder.Services.AddScoped<IGenericServiceInterface<OvertimeType>, GenericServiceImplementation<OvertimeType>>();
 
+//Vacation
+builder.Services.AddScoped<IGenericServiceInterface<Vacation>, GenericServiceImplementation<Vacation>>();
+builder.Services.AddScoped<IGenericServiceInterface<VacationType>, GenericServiceImplementation<VacationType>>();
+
+//Sanction
+builder.Services.AddScoped<IGenericServiceInterface<Sanction>, GenericServiceImplementation<Sanction>>();
+builder.Services.AddScoped<IGenericServiceInterface<SanctionType>, GenericServiceImplementation<SanctionType>>();
+
+//Doctor
+builder.Services.AddScoped<IGenericServiceInterface<Doctor>, GenericServiceImplementation<Doctor>>();
 //Employee
 builder.Services.AddScoped<IGenericServiceInterface<Employee>, GenericServiceImplementation<Employee>>();
 

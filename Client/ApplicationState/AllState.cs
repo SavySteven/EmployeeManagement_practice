@@ -109,7 +109,7 @@
 
         //Sanction Type
         public bool ShowSanctionType { get; set; }
-        public void ShowSanctionTypeTypeClicked()
+        public void ShowSanctionTypeClicked()
         {
             ResetAllDepartments();
             ShowSanctionType = true;
@@ -118,7 +118,7 @@
 
         //Vacation
         public bool ShowVacation { get; set; }
-        public void ShowVacationClicked()
+        public void VacatinClicked()
         {
             ResetAllDepartments();
             ShowVacation = true;

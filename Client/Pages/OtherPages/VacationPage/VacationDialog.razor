@@ -4,39 +4,41 @@
         <Header>@Title Employee Vacation</Header>
         <Content>
             <EditForm Model="ItemModel" Enhance OnSubmit="Save">
-                <div class="card-body">
-                    <div class="form-group mt-2">
-                        <label class="form-label">Employee ID</label>
-                        <input @bind="ItemModel.EmployeeId" class="form-control diabled" />
-                    </div>
-                    <div class="form-group mt-2">
-                        <label class="form-label">Start Date</label>
-                        <InputDate @bind-Value="ItemModel.StartDate" class="form-control" />
-                    </div>
-                    <div class="form-group mt-2">
-                        <label class="form-label">Number of days</label>
-                        <InputDate @bind-Value="ItemModel.NumberofDays" class="form-control " />
-                    </div>
-                    <div class="form-group mt-2">
-                        <label class="form-label">End Date</label>
-                        <input value="ItemModel.EndDate.Date" class="form-control diabled" />
-                    </div>
-                    <div class="form-group mt-3 mb-3">
-                        <label class="form-label">Select Type</label>
-                        @if (ItemModel.VacationType != null)
-                        {
-                            string selected = ItemModel.VacationType!.Name!;
-                            <SfDropDownList TValue="string" TItem="VacationType" Placeholder="@selected" DataSource="VacationTypes"></SfDropDownList>
-                            <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
-                            <DropDownListEvents TValue="string" TItem="VacationType" ValueChange="OnValueChange"></DropDownListEvents>
-                        }
-                        else
-                        {
-                            <SfDropDownList TValue="string" TItem="VacationType" Placeholder="Select Type" DataSource="VacationTypes"></SfDropDownList>
-                            <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
-                            <DropDownListEvents TValue="string" TItem="VacationType" ValueChange="OnValueChange"></DropDownListEvents>
+                <div class="card border-success">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Employee ID</label>
+                            <input @bind="ItemModel.EmployeeId" class="form-control" disabled />
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label">Start Date</label>
+                            <InputDate @bind-Value="ItemModel.StartDate" class="form-control" />
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label">Number of days</label>
+                            <InputDate @bind-Value="ItemModel.NumberOfDays" class="form-control " />
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label">End Date</label>
+                            <input value="ItemModel.EndDate.Date" class="form-control diabled" />
+                        </div>
+                        <div class="form-group mt-3 mb-3">
+                            <label class="form-label">Select Type</label>
+                            @if (ItemModel.VacationType != null)
+                            {
+                                string selected = ItemModel.VacationType!.Name!;
+                                <SfDropDownList TValue="string" TItem="VacationType" Placeholder="@selected" DataSource="VacationTypes"></SfDropDownList>
+                                <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
+                                <DropDownListEvents TValue="string" TItem="VacationType" ValueChange="OnValueChange"></DropDownListEvents>
+                            }
+                            else
+                            {
+                                <SfDropDownList TValue="string" TItem="VacationType" Placeholder="Select Type" DataSource="VacationTypes"></SfDropDownList>
+                                <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
+                                <DropDownListEvents TValue="string" TItem="VacationType" ValueChange="OnValueChange"></DropDownListEvents>
 
-                        }
+                            }
+                        </div>
                     </div>
 
                 </div>
@@ -59,7 +61,7 @@
     private bool IsVisible { get; set; } = false;
     private async void Save()
     {
-        if (ItemModel.VacationType <= 0)
+        if (ItemModel.VacationTypeId <= 0)
             await dialogService.AlertAsync("Youneed to provide type.", "Alert!");
         else
             await HandleSaveOperationEvent.InvokeAsync(ItemModel);
@@ -76,7 +78,7 @@
         StateHasChanged();
     }
 
-    public void OnValueChange(ChangeEventArgs<string, OvertimeType> args)
+    public void OnValueChange(ChangeEventArgs<string, VacationType> args)
     {
         ItemModel.VacationTypeId = int.Parse(args.Value.ToString());
     }
